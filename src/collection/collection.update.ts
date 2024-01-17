@@ -51,7 +51,14 @@ export class CollectionUpdate {
 
   @Action('open_web_action')
   async onOpenWeb(@Ctx() ctx: Scenes.SceneContext) {
-    const btns = [[Markup.button.webApp('Веб-коллекция  🖥', 'https://hui.ru')]];
+    const btns = [
+      [
+        Markup.button.webApp(
+          'Веб-коллекция  🖥',
+          'https://web-pozdnyak.vercel.app/',
+        ),
+      ],
+    ];
     await ctx.reply(TelegramMessages.getWebDescription(), {
       reply_markup: { inline_keyboard: btns },
     });
