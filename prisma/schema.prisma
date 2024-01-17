@@ -1,0 +1,42 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Player {
+  player_id       String  @id @unique 
+  first_name            String
+  last_name String?
+  username        String?
+  score_all_time  Int     @db.Integer @default(0)
+  score_season    Int     @db.Integer @default(0)
+  card_collection Card[]
+  fav_card_collection Card[] @relation("fav_cards")
+  free_tryings Int @default(0)
+  last_trying DateTime @db.Date 
+
+}
+
+enum Rarity {
+  OMEZHKA
+  BASIC
+  RARE
+  ELEPHANT 
+  ELEPHANT_SHARK
+  ALPHA
+}
+
+model Card {
+  card_id         Int  @id @unique @default(autoincrement()) @db.Integer
+  name String
+  rarity Rarity
+  srcAsset String @unique
+  owners Player[]
+  fav_owners Player[] @relation("fav_cards")
+  score Int
+}
